@@ -35,9 +35,9 @@ entry:
   %3 = call i252 @felt_add(i252 %2, i252 %1)
   %4 = call i252 @"store_temp<felt>"(i252 %3)
   %5 = call i252 @"rename<felt>"(i252 %4)
-  %ret_struct_ptr = alloca { i252 }
+  %ret_struct_ptr = alloca { i252 }, align 8
   %field_0_ptr = getelementptr inbounds { i252 }, { i252 }* %ret_struct_ptr, i32 0, i32 0
-  store i252 %5, i252* %field_0_ptr
-  %return_struct_value = load { i252 }, { i252 }* %ret_struct_ptr
+  store i252 %5, i252* %field_0_ptr, align 4
+  %return_struct_value = load { i252 }, { i252 }* %ret_struct_ptr, align 4
   ret { i252 } %return_struct_value
 }
