@@ -1,4 +1,5 @@
 extern crate tempdir;
+use pretty_assertions::assert_eq;
 use shenlong_core::sierra::llvm_compiler::Compiler;
 use tempdir::TempDir;
 use test_case::test_case;

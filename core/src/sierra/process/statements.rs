@@ -1,6 +1,7 @@
 use cairo_lang_sierra::ids::VarId;
 /// This file contains everything related to sierra statement processing.
 use cairo_lang_sierra::program::{GenBranchTarget, GenStatement, Invocation};
+use inkwell::types::BasicType;
 use inkwell::values::{BasicMetadataValueEnum, StructValue};
 use log::debug;
 
@@ -140,7 +141,8 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
                 .builder
                 .build_struct_gep(res_type, res_ptr, field_index as u32, format!("{id}_ptr").as_str())
                 .expect("Pointer should be valid");
-            let field = self.builder.build_load(res_type, field_ptr, id.as_str());
+            let field_type = res.get_type().get_field_types().get(field_index).unwrap().as_basic_type_enum();
+            let field = self.builder.build_load(field_type, field_ptr, id.as_str());
             self.variables.insert(id, field);
         }
     }
