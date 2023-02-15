@@ -64,11 +64,11 @@ pub enum SierraSubCommands {
     CompileToLlvm {
         /// The path to the Sierra program to compile.
         #[arg(short, long, value_name = "PROGRAM_PATH")]
-        program_path: String,
+        program_path: PathBuf,
         /// The path to the output LLVM IR file.
         /// If not specified, the output will be printed to stdout.
         /// If specified, the output will be written to the specified file.
-        #[arg(short, long, value_name = "OUTPUT_PATH")]
-        output_path: Option<String>,
+        #[arg(short, long, value_name = "OUTPUT_PATH", default_value = "out.ll")]
+        output_path: Option<PathBuf>,
     },
 }
