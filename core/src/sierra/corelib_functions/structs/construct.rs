@@ -47,10 +47,10 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
         for (i, param) in func.get_params().iter().enumerate() {
             let tuple_ptr = self
                 .builder
-                .build_struct_gep(struct_ptr, i as u32, format!("field_{i}_ptr").as_str())
+                .build_struct_gep(return_type, struct_ptr, i as u32, format!("field_{i}_ptr").as_str())
                 .expect("Pointer should be valid");
             self.builder.build_store(tuple_ptr, *param);
         }
-        self.builder.build_return(Some(&self.builder.build_load(struct_ptr, "res")));
+        self.builder.build_return(Some(&self.builder.build_load(return_type, struct_ptr, "res")));
     }
 }
