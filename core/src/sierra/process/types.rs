@@ -19,6 +19,7 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
         // Check that the current state is valid.
         self.check_state(&CompilationState::NotStarted)?;
         for type_declaration in self.program.type_declarations.iter() {
+            debug!(?type_declaration.long_id, "processing type");
             // All those types are known in advance. A struct is a combination of multiple "primitive" types
             let type_name = type_declaration.long_id.generic_id.0.as_str();
             match type_name {
@@ -28,6 +29,8 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
                 "NonZero" => self.non_zero(type_declaration),
                 // Regular struct
                 "Struct" => self.sierra_struct(type_declaration),
+                // Uninitialized<T>
+                "Uninitialized" => self.uninitialized(type_declaration),
                 _ => debug!(type_name, "unimplemented type"),
             }
         }
