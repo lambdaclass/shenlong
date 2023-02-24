@@ -2,6 +2,7 @@ use inkwell::types::BasicType;
 
 use super::DEFAULT_PRIME;
 use crate::sierra::llvm_compiler::Compiler;
+use crate::sierra::process::corelib::{PRINT_DOUBLE_FELT_FUNC, PRINT_FELT_FUNC};
 
 impl<'a, 'ctx> Compiler<'a, 'ctx> {
     /// Implementation of the LLVM IR conversion of a felt addition.
@@ -18,12 +19,20 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
         let func = self.module.add_function("modulo", felt_type.fn_type(&[big_felt_type.into()], false), None);
         self.builder.position_at_end(self.context.append_basic_block(func, "entry"));
         let prime = big_felt_type.const_int_from_string(DEFAULT_PRIME, inkwell::types::StringRadix::Decimal).unwrap();
+        self.call_printf("Value before mod: ", &[]);
+        self.call_print_type(PRINT_DOUBLE_FELT_FUNC, func.get_first_param().unwrap().into_int_value().into());
+
         // smod
         let modu = // We just defined the function so it shouldn't panic
             self.builder.build_int_signed_rem(func.get_first_param().unwrap().into_int_value(), prime, "modulus");
+
+        self.call_printf("Value after mod: ", &[]);
+        self.call_print_type(PRINT_DOUBLE_FELT_FUNC, modu.into());
         // As we performed smod on the value it is now 0 < |res| < PRIME so it's less than 252 and we can
         // truncate the high bits
         let res = self.builder.build_int_truncate(modu, felt_type.into_int_type(), "res");
+        self.call_printf("Value after trunc: ", &[]);
+        self.call_print_type(PRINT_FELT_FUNC, res.into());
         self.builder.build_return(Some(&res));
     }
 }

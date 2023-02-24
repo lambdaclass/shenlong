@@ -21,7 +21,6 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
 
         // Check that the current state is valid.
         self.check_state(&CompilationState::TypesProcessed)?;
-        self.modulo();
 
         // Define external printf, used in call_printf calls.
         // i32 @printf(ptr, ...);
@@ -38,6 +37,8 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
         self.printf_for_type(felt_type.into(), PRINT_FELT_FUNC);
         let double_felt = self.context.custom_width_int_type(503);
         self.printf_for_type(double_felt.into(), PRINT_DOUBLE_FELT_FUNC);
+
+        self.modulo();
 
         // Iterate over the libfunc declarations in the Sierra program.
         for libfunc_declaration in self.program.libfunc_declarations.iter() {

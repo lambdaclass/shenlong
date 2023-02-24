@@ -64,7 +64,7 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
         self.builder.build_unconditional_branch(while_loop);
         self.builder.position_at_end(while_loop);
 
-        // while (new_r != 0)
+        // while (s != 0)
         let is_divisor_zero = self.builder.build_int_compare(
             IntPredicate::NE,
             self.builder.build_load(double_felt, s, "s_check").into_int_value(),
@@ -73,10 +73,11 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
         );
         self.builder.build_conditional_branch(is_divisor_zero, body_loop, exit_loop);
         self.builder.position_at_end(body_loop);
+
         self.call_printf("loop body:\n", &[]);
         let r_val = self.builder.build_load(double_felt, r, "r").into_int_value();
         let s_val = self.builder.build_load(double_felt, s, "s").into_int_value();
-        let q = self.builder.build_int_signed_div(r_val, s_val, "q");
+        let q = self.builder.build_int_signed_div(r_val, s_val, "q"); // works
         self.call_printf("q = r / s\n", &[]);
         self.call_printf("q = ", &[]);
         self.call_print_type(PRINT_DOUBLE_FELT_FUNC, q.into());
@@ -85,18 +86,10 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
         self.call_printf("s = ", &[]);
         self.call_print_type(PRINT_DOUBLE_FELT_FUNC, s_val.into());
         self.call_printf("r, s = s, r - q * s\n", &[]);
-        let q_mul_s = self.builder.build_int_signed_rem(
-            self.builder.build_int_mul(q, s_val, "q_mul_s"),
-            prime_val,
-            "q_mul_s_mod",
-        );
+        let q_mul_s = self.builder.build_int_mul(q, s_val, "q_mul_s");
         self.call_printf("q * s = ", &[]);
         self.call_print_type(PRINT_DOUBLE_FELT_FUNC, q_mul_s.into());
-        let new_s = self.builder.build_int_signed_rem(
-            self.builder.build_int_sub(r_val, q_mul_s, "new_s"),
-            prime_val,
-            "new_s_mod",
-        );
+        let new_s = self.builder.build_int_sub(r_val, q_mul_s, "new_s");
         self.call_printf("s = ", &[]);
         self.call_print_type(PRINT_DOUBLE_FELT_FUNC, new_s.into());
         let new_r = self.builder.build_load(double_felt, s, "new_r");
@@ -112,11 +105,7 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
         self.call_printf("y = ", &[]);
         self.call_print_type(PRINT_DOUBLE_FELT_FUNC, y_val.into());
         self.call_printf("x, y = y, x - q * y\n", &[]);
-        let q_mul_y = self.builder.build_int_signed_rem(
-            self.builder.build_int_mul(q, y_val, "q_mul_y"),
-            prime_val,
-            "q_mul_y_mod",
-        );
+        let q_mul_y = self.builder.build_int_mul(q, y_val, "q_mul_y");
         self.call_printf("q * y = ", &[]);
         self.call_print_type(PRINT_DOUBLE_FELT_FUNC, q_mul_y.into());
         let new_y = self.builder.build_int_sub(x_val, q_mul_y, "new_y");
@@ -148,6 +137,11 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
         self.call_print_type(PRINT_DOUBLE_FELT_FUNC, rhs.into());
 
         let mul = self.builder.build_int_mul(lhs, rhs, "res");
+
+        self.call_printf("mul = ", &[]);
+        self.call_print_type(PRINT_DOUBLE_FELT_FUNC, mul.into());
+
+        // let mul_plus_prime = self.builder.build_int_add(mul, prime_val, "mul_plus_prime");
         // Panics if the function doesn't have enough arguments but it shouldn't happen since we just
         // defined it above.
         // Also panics if the modulo function doesn't return a value but it shouldn't happen.
