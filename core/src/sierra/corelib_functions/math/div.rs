@@ -73,33 +73,58 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
         );
         self.builder.build_conditional_branch(is_divisor_zero, body_loop, exit_loop);
         self.builder.position_at_end(body_loop);
+        self.call_printf("loop body:\n", &[]);
         let r_val = self.builder.build_load(double_felt, r, "r").into_int_value();
         let s_val = self.builder.build_load(double_felt, s, "s").into_int_value();
         let q = self.builder.build_int_signed_div(r_val, s_val, "q");
+        self.call_printf("q = r / s\n", &[]);
+        self.call_printf("q = ", &[]);
         self.call_print_type(PRINT_DOUBLE_FELT_FUNC, q.into());
+        self.call_printf("r = ", &[]);
+        self.call_print_type(PRINT_DOUBLE_FELT_FUNC, r_val.into());
+        self.call_printf("s = ", &[]);
+        self.call_print_type(PRINT_DOUBLE_FELT_FUNC, s_val.into());
+        self.call_printf("r, s = s, r - q * s\n", &[]);
         let q_mul_s = self.builder.build_int_signed_rem(
             self.builder.build_int_mul(q, s_val, "q_mul_s"),
             prime_val,
             "q_mul_s_mod",
         );
+        self.call_printf("q * s = ", &[]);
+        self.call_print_type(PRINT_DOUBLE_FELT_FUNC, q_mul_s.into());
         let new_s = self.builder.build_int_signed_rem(
             self.builder.build_int_sub(r_val, q_mul_s, "new_s"),
             prime_val,
             "new_s_mod",
         );
+        self.call_printf("s = ", &[]);
+        self.call_print_type(PRINT_DOUBLE_FELT_FUNC, new_s.into());
         let new_r = self.builder.build_load(double_felt, s, "new_r");
+        self.call_printf("r = ", &[]);
+        self.call_print_type(PRINT_DOUBLE_FELT_FUNC, new_r.into());
         self.builder.build_store(s, new_s);
         self.builder.build_store(r, new_r);
 
         let x_val = self.builder.build_load(double_felt, x, "x").into_int_value();
         let y_val = self.builder.build_load(double_felt, y, "y").into_int_value();
+        self.call_printf("x = ", &[]);
+        self.call_print_type(PRINT_DOUBLE_FELT_FUNC, x_val.into());
+        self.call_printf("y = ", &[]);
+        self.call_print_type(PRINT_DOUBLE_FELT_FUNC, y_val.into());
+        self.call_printf("x, y = y, x - q * y\n", &[]);
         let q_mul_y = self.builder.build_int_signed_rem(
             self.builder.build_int_mul(q, y_val, "q_mul_y"),
             prime_val,
             "q_mul_y_mod",
         );
+        self.call_printf("q * y = ", &[]);
+        self.call_print_type(PRINT_DOUBLE_FELT_FUNC, q_mul_y.into());
         let new_y = self.builder.build_int_sub(x_val, q_mul_y, "new_y");
         let new_x = self.builder.build_load(double_felt, y, "new_x");
+        self.call_printf("x = ", &[]);
+        self.call_print_type(PRINT_DOUBLE_FELT_FUNC, new_x.into());
+        self.call_printf("y = ", &[]);
+        self.call_print_type(PRINT_DOUBLE_FELT_FUNC, new_y.into());
         self.builder.build_store(y, new_y);
         self.builder.build_store(x, new_x);
 
@@ -109,6 +134,8 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
 
         self.builder.position_at_end(exit_loop);
 
+        self.call_printf("out of loop\n", &[]);
+
         // Extend left hand side.
         let lhs = self.builder.build_int_s_extend(
             func.get_first_param().expect("felt_div should have a first arg").into_int_value(),
@@ -117,6 +144,8 @@ impl<'a, 'ctx> Compiler<'a, 'ctx> {
         );
 
         let rhs = self.builder.build_load(double_felt, x, "inverse").into_int_value();
+        self.call_printf("x (inverse) = ", &[]);
+        self.call_print_type(PRINT_DOUBLE_FELT_FUNC, rhs.into());
 
         let mul = self.builder.build_int_mul(lhs, rhs, "res");
         // Panics if the function doesn't have enough arguments but it shouldn't happen since we just

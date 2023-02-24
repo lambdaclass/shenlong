@@ -42,4 +42,4 @@ def modular_inverse(a, m):
     return x % m
 
 
-6 * modular_inverse(2, prime) % prime
+print(6 * modular_inverse(2, prime) % prime)
