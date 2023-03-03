@@ -30,7 +30,10 @@
 <a href="#30" id="30">30</a>
 <a href="#31" id="31">31</a>
 <a href="#32" id="32">32</a>
-</pre><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::sierra::llvm_compiler::Compiler;
+</pre><pre class="rust"><code><span class="kw">use </span>inkwell::debug_info::DIScope;
+<span class="kw">use </span>inkwell::values::FunctionValue;
+
+<span class="kw">use </span><span class="kw">crate</span>::sierra::llvm_compiler::Compiler;
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;ctx</span>&gt; Compiler&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;ctx</span>&gt; {
     <span class="doccomment">/// Implementation of the LLVM IR conversion of felt == 0.
@@ -43,10 +46,7 @@
     /// # Error
     ///
     /// Returns an error if the processing of the branches statements fails.
-    </span><span class="kw">pub fn </span>jump(<span class="kw-2">&amp;mut </span><span class="self">self</span>, dest_nb: usize) {
-        <span class="comment">// Get the function that&#39;s currently processed.
-        // It shouldn&#39;t panic as if we&#39;re there at least a function has to have been declared
-        </span><span class="kw">let </span>func = <span class="self">self</span>.module.get_last_function().unwrap();
+    </span><span class="kw">pub fn </span>jump(<span class="kw-2">&amp;mut </span><span class="self">self</span>, func: FunctionValue&lt;<span class="lifetime">&#39;ctx</span>&gt;, dest_nb: usize, scope: DIScope&lt;<span class="lifetime">&#39;ctx</span>&gt;) {
         <span class="comment">// Check if we defined the basic block we want to jump to. Can be useful if several jumps lead to
         // the same block or if we jump backward.
         </span><span class="kw">let </span>destination = <span class="kw">match </span><span class="self">self</span>.basic_blocks.get(<span class="kw-2">&amp;</span>dest_nb) {
@@ -59,8 +59,8 @@
         </span><span class="self">self</span>.basic_blocks.insert(dest_nb, destination);
         <span class="self">self</span>.builder.position_at_end(destination);
         <span class="comment">// Keep processing the statements.
-        </span><span class="self">self</span>.process_statements_from(dest_nb).unwrap();
+        </span><span class="self">self</span>.process_statements_from(func, dest_nb, scope).unwrap();
     }
 }
 </code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="shenlong_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (f77bfb733 2023-03-01)" data-search-js="search-2cde8914278f97ed.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</section></main><div id="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="shenlong_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (13471d3b2 2023-03-02)" data-search-js="search-2cde8914278f97ed.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>

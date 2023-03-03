@@ -67,7 +67,7 @@
                             .expect(<span class="string">&quot;Type should have been defined before struct&quot;</span>)
                             .as_basic_type_enum(),
                     );
-                    debug_args.push(<span class="kw-2">*</span><span class="self">self</span>.debug_types_by_id.get(id).unwrap());
+                    debug_args.push(<span class="kw-2">*</span><span class="self">self</span>.debug.types_by_id.get(id).unwrap());
                 }
                 <span class="comment">// Ignore the user type as it is not a struct field.
                 </span>GenericArg::UserType(<span class="kw">_</span>) =&gt; <span class="kw">continue</span>,
@@ -83,8 +83,8 @@
         <span class="self">self</span>.types_by_id.insert(type_declaration.id.id, struct_type.as_basic_type_enum());
         <span class="self">self</span>.types_by_name.insert(debug_name.to_string(), struct_type.as_basic_type_enum());
 
-        <span class="self">self</span>.create_debug_type_struct(type_declaration.id.id, debug_name, <span class="kw-2">&amp;</span>struct_type, <span class="kw-2">&amp;</span>debug_args);
+        <span class="self">self</span>.debug.create_struct(type_declaration.id.id, debug_name, <span class="kw-2">&amp;</span>struct_type, <span class="kw-2">&amp;</span>debug_args);
     }
 }
 </code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="shenlong_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (f77bfb733 2023-03-01)" data-search-js="search-2cde8914278f97ed.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</section></main><div id="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="shenlong_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (13471d3b2 2023-03-02)" data-search-js="search-2cde8914278f97ed.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
