@@ -222,7 +222,7 @@ checksum = "89b2fd2a0dcf38d7971e2194b6b6eebab45ae01067456a7fd93d5547a61b70be"
 [[package]]
 name = "cairo-felt"
 version = "0.1.3"
-source = "git+https://github.com/lambdaclass/cairo-rs/?branch=main#841ac660c7b149cc51f257c32bfc2b2bdccec886"
+source = "git+https://github.com/lambdaclass/cairo-rs/?branch=main#d5a7beaccf8af13d5d57dd26166faa9a530edbb8"
 dependencies = [
  "lazy_static",
  "num-bigint",
@@ -234,7 +234,7 @@ dependencies = [
 [[package]]
 name = "cairo-lang-sierra"
 version = "1.0.0-alpha.3"
-source = "git+https://github.com/starkware-libs/cairo?branch=main#818cfb7319f5adec57e63dc63755d9b6d3334173"
+source = "git+https://github.com/starkware-libs/cairo?branch=main#1fe2c3368262ee579cc7e58703217407d41b4514"
 dependencies = [
  "cairo-lang-utils",
  "const-fnv1a-hash",
@@ -256,7 +256,7 @@ dependencies = [
 [[package]]
 name = "cairo-lang-utils"
 version = "1.0.0-alpha.3"
-source = "git+https://github.com/starkware-libs/cairo?branch=main#818cfb7319f5adec57e63dc63755d9b6d3334173"
+source = "git+https://github.com/starkware-libs/cairo?branch=main#1fe2c3368262ee579cc7e58703217407d41b4514"
 dependencies = [
  "chrono",
  "env_logger 0.9.3",
@@ -268,7 +268,7 @@ dependencies = [
 [[package]]
 name = "cairo-vm"
 version = "0.1.3"
-source = "git+https://github.com/lambdaclass/cairo-rs/?branch=main#841ac660c7b149cc51f257c32bfc2b2bdccec886"
+source = "git+https://github.com/lambdaclass/cairo-rs/?branch=main#d5a7beaccf8af13d5d57dd26166faa9a530edbb8"
 dependencies = [
  "bincode",
  "cairo-felt",
@@ -1416,7 +1416,7 @@ dependencies = [
 [[package]]
 name = "parse-hyperlinks"
 version = "0.23.4"
-source = "git+https://github.com/lambdaclass/cairo-rs/?branch=main#841ac660c7b149cc51f257c32bfc2b2bdccec886"
+source = "git+https://github.com/lambdaclass/cairo-rs/?branch=main#d5a7beaccf8af13d5d57dd26166faa9a530edbb8"
 dependencies = [
  "nom",
 ]
@@ -2054,9 +2054,9 @@ dependencies = [
 
 [[package]]
 name = "socket2"
-version = "0.4.7"
+version = "0.4.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "02e2d2db9033d13a1567121ddd7a095ee144db4e1ca1b1bda3419bc0da294ebd"
+checksum = "64a4a911eed85daf18834cfaa86a79b7d266ff93ff5ba14005426219480ed662"
 dependencies = [
  "libc",
  "winapi",
@@ -2121,9 +2121,9 @@ dependencies = [
 
 [[package]]
 name = "string_cache"
-version = "0.8.4"
+version = "0.8.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "213494b7a2b503146286049378ce02b482200519accc31872ee8be91fa820a08"
+checksum = "7d69e88b23f23030bf4d0e9ca7b07434f70e1c1f4d3ca7e93ce958b373654d9f"
 dependencies = [
  "new_debug_unreachable",
  "once_cell",
@@ -2313,9 +2313,9 @@ dependencies = [
 
 [[package]]
 name = "tokio"
-version = "1.25.0"
+version = "1.26.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c8e00990ebabbe4c14c08aca901caed183ecd5c09562a12c824bb53d3c3fd3af"
+checksum = "03201d01c3c27a29c8a5cee5b55a93ddae1ccf6f08f65365c2c918f8c1b76f64"
 dependencies = [
  "autocfg",
  "bytes",
@@ -2328,7 +2328,7 @@ dependencies = [
  "signal-hook-registry",
  "socket2",
  "tokio-macros",
- "windows-sys 0.42.0",
+ "windows-sys 0.45.0",
 ]
 
 [[package]]

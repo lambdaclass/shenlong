@@ -30,7 +30,7 @@ pub fn operation(case: &str) {
             if data.1.len() % 2 == 0 { num_bigint::Sign::Plus } else { num_bigint::Sign::Minus },
             data.1,
         ) % &prime;
-        let mut expected = match case {
+        let expected = match case {
             "add" => BigInt::add,
             "sub" => BigInt::sub,
             "mul" => BigInt::mul,

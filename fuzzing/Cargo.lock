@@ -91,7 +91,7 @@ checksum = "0d261e256854913907f67ed06efbc3338dfe6179796deefc1ff763fc1aee5535"
 [[package]]
 name = "cairo-lang-sierra"
 version = "1.0.0-alpha.3"
-source = "git+https://github.com/starkware-libs/cairo?branch=main#7ba71d59a42ee06795f6e96c454edefce2579046"
+source = "git+https://github.com/starkware-libs/cairo?branch=main#1fe2c3368262ee579cc7e58703217407d41b4514"
 dependencies = [
  "cairo-lang-utils",
  "const-fnv1a-hash",
@@ -113,7 +113,7 @@ dependencies = [
 [[package]]
 name = "cairo-lang-utils"
 version = "1.0.0-alpha.3"
-source = "git+https://github.com/starkware-libs/cairo?branch=main#7ba71d59a42ee06795f6e96c454edefce2579046"
+source = "git+https://github.com/starkware-libs/cairo?branch=main#1fe2c3368262ee579cc7e58703217407d41b4514"
 dependencies = [
  "chrono",
  "env_logger 0.9.3",
@@ -191,9 +191,9 @@ dependencies = [
 
 [[package]]
 name = "crossbeam-utils"
-version = "0.8.14"
+version = "0.8.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4fb766fa798726286dbbb842f174001dab8abc7b627a1dd86e0b7222a95d929f"
+checksum = "3c063cd8cc95f5c377ed0d4b49a4b21f632396ff690e8470c29b3359b346984b"
 dependencies = [
  "cfg-if",
 ]
@@ -1116,9 +1116,9 @@ dependencies = [
 
 [[package]]
 name = "string_cache"
-version = "0.8.4"
+version = "0.8.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "213494b7a2b503146286049378ce02b482200519accc31872ee8be91fa820a08"
+checksum = "7d69e88b23f23030bf4d0e9ca7b07434f70e1c1f4d3ca7e93ce958b373654d9f"
 dependencies = [
  "new_debug_unreachable",
  "once_cell",
